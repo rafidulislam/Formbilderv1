@@ -27,18 +27,18 @@ This project allows users to create custom forms with multiple fields and option
 ---
 
 ## Project Structure
-FormBuilder/
-├─ Controllers/
-│ └─ FormBuilderController.cs
-├─ Models/
-│ ├─ FormModel.cs
-│ ├─ FormField.cs
-│ └─ FormOption.cs
-├─ Views/
-│ └─ FormBuilder/
-│ ├─ Index.cshtml # List all forms
-│ ├─ Create.cshtml # Form creation page
-│ └─ Preview.cshtml # Form preview page
-├─ appsettings.json # Connection string
-└─ Program.cs / Startup.cs
+- FormBuilder/
+  - Controllers/
+    - FormBuilderController.cs
+  - Models/
+    - FormModel.cs
+    - FormField.cs
+    - FormOption.cs
+  - Views/
+    - FormBuilder/
+      - Index.cshtml        # List all forms
+      - Create.cshtml       # Form creation page
+      - Preview.cshtml      # Form preview page
+  - appsettings.json       # Connection string
+  - Program.cs / Startup.cs
 
