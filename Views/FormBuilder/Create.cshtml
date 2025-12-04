@@ -1,0 +1,85 @@
+﻿@model Formbilderv1.Models.FormModel
+
+@{
+    ViewData["Title"] = "Google Form Builder";
+}
+
+<h2>Create Form</h2>
+
+<form asp-action="Create" method="post">
+
+    <div class="mb-3">
+        <input type="text" name="Title" class="form-control" placeholder="Form Title" required /> @* main form name *@
+    </div>
+
+    <hr />
+
+    <div id="fields"></div> @* All dynamic questions will be added inside this div *@
+
+    <button type="button" class="btn btn-primary" onclick="addField()">+ Add Question</button> @* add a new question *@
+
+    <br /><br />
+    <button type="submit" class="btn btn-success">Save Form</button>
+</form>
+
+<script>
+    let index = 0;
+
+    function addField() {
+        let html = `
+        <div class="card p-3 mb-3" id="field_${index}">
+            <input type="hidden" name="Fields.index" value="${index}" />
+            <input type="hidden" name="Fields[${index}].FieldType" value="text" id="fieldType_${index}"
+
+            <label>Question Title:</label>
+            <input type="text" name="Fields[${index}].Label" class="form-control mb-2" required />
+
+            <label>Field Type:</label>
+            <select class="form-select mb-2" onchange="changeType(${index}, this.value)">
+                <option value="text">Short Answer</option>
+                <option value="multiple">Multiple Choice</option>
+            </select>
+
+            <div id="options_${index}"></div>
+
+            <button class="btn btn-danger mt-2" onclick="removeField(${index})">Remove</button>
+        </div>
+        `;
+        document.getElementById("fields").insertAdjacentHTML("beforeend", html); /* inject html Into div-id="fields" */
+        index++;
+    }
+
+    function changeType(i, type) {
+        document.getElementById(`fieldType_${i}`).value = type;
+
+        if (type === "multiple") {
+            let html = `
+                <div>
+                    <button type="button" class="btn btn-outline-primary btn-sm"
+                            onclick="addOption(${i})">+ Add Option</button>
+                    <div id="opt_list_${i}" class="mt-2"></div>
+                </div>`;
+            document.getElementById(`options_${i}`).innerHTML = html;
+        } 
+        else {
+            document.getElementById(`options_${i}`).innerHTML = "";
+        }
+    }
+
+    function addOption(i) {
+        let optList = document.getElementById(`opt_list_${i}`);
+        let optCount = optList.childElementCount;
+
+        let html = `
+            <div class="input-group mb-2">
+            <input type="hidden" name="Fields[${i}].Options.index" value="${optCount}" />
+                <input type="text" name="Fields[${i}].Options[${optCount}].OptionText"
+                       class="form-control" placeholder="Option text" required />
+            </div>`;
+        optList.insertAdjacentHTML("beforeend", html);
+    }
+
+    function removeField(i) {
+        document.getElementById(`field_${i}`).remove();
+    }
+</script>

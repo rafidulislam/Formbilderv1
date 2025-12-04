@@ -1,0 +1,46 @@
+﻿@model FormModel
+
+<h3 class="mb-4">@Model.Title</h3>
+
+@foreach (var field in Model.Fields)
+{
+    <div class="mb-4 p-3 border rounded shadow-sm" style="background:#fafafa;">
+        <label class="fw-bold">
+            @field.Label
+            @if (field.IsRequired)
+            {
+                <span style="color:red;"> *</span>
+            }
+        </label>
+
+        <div class="mt-2">
+
+            @if (field.FieldType == "text")
+            {
+                <input type="text"
+                       class="form-control"
+                       placeholder="Short answer text"
+                       disabled />
+            }
+            else if (field.FieldType == "multiple")
+            {
+                <!-- Google Form Style Radio Options -->
+                @foreach (var opt in field.Options)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input"
+                               type="radio"
+                               disabled />
+
+                        <label class="form-check-label">
+                            @opt.OptionText
+                        </label>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+}
+
+@* <button class="btn btn-primary">Submit</button> *@

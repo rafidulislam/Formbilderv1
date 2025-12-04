@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Formbilderv1.Models.FormModel>
+
+<h2>All Forms</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>Form Title</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var form in Model)
+        {
+            <tr>
+                <td>@form.Title</td>
+                <td>
+                    <a asp-action="Preview" asp-route-id="@form.Id" class="btn btn-sm btn-info">
+                        Preview
+                    </a>
+                    <!-- Optional: Add Edit/Delete buttons here -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
